@@ -1,3 +1,5 @@
-# mini_project_1
+# Project Praktikum Pemograman Aplikasi Bergerak
 
-A new Flutter project.
+## Muhammad Sadikin Samir
+
+## Sistem Informasi 2024 A
