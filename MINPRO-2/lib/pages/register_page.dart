@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'login_page.dart';
 import '../main.dart';
+import 'package:flutter/services.dart';
 
 final supabase = Supabase.instance.client;
 
@@ -28,6 +29,16 @@ class _RegisterPageState extends State<RegisterPage> {
 
     if (password.isEmpty || nama.isEmpty || noHp.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Semua field harus diisi")));
+      return;
+    }
+
+    if (!noHp.startsWith('08')) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Nomor HP harus diawali 08")));
+      return;
+    }
+
+    if (noHp.length < 12) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Nomor HP minimal 12 angka")));
       return;
     }
 
@@ -128,9 +139,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextField(
                       controller: noHpController,
                       keyboardType: TextInputType.phone,
+                      maxLength: 12,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       style: TextStyle(color: isDark ? Colors.white : Colors.black),
                       decoration: InputDecoration(
-                        hintText: "No HP",
+                        hintText: "No HP (08xxxxxxxxxx)",
+                        counterText: "",
                         hintStyle: TextStyle(color: isDark ? const Color(0xFF6B7280) : const Color(0xFFB0B7C3), fontSize: 14),
                         prefixIcon: Icon(Icons.phone_outlined, color: isDark ? const Color(0xFF6B7280) : const Color(0xFFB0B7C3), size: 20),
                         filled: true,
